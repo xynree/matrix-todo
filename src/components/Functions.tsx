@@ -11,9 +11,7 @@ import {
 import "./Types.d.ts";
 
 const Functions = () => {
-  const isEmpty = (val) => (val === '')
 
-  const isOne = val => (val.length === 1)
 
   const rotateOnOff = (setRotate, rotate) => {
     setRotate(!rotate);
@@ -96,27 +94,19 @@ const Functions = () => {
     hasClicked: any,
     td3tasks
   ) => {
-
-    if (isOne(adjusted.title)) {
-     let newTasks = td3tasks.map((task) => {
-       task.editing = false;
-       return task
-     })
-
-     setTasks(newTasks)
-     hasClicked.current = false;
-
-    } else {
       let newTasks = td3tasks.map((task) => {
         if (task.id === adjusted.id) {
-          task.title = adjusted.title;
+          if (adjusted.title !== '' && adjusted.title.length !== 1){ 
+            console.log('it is not empty or one character', task)
+            task.title = adjusted.title;}
+
           task.editing = false;
         }
-        return task;
+        return {...task};
       });
       setTasks(newTasks);
       hasClicked.current = false;
-    } 
+  
   };
 
   const findQuad = (name) => {
@@ -156,7 +146,7 @@ const Functions = () => {
       shift: [0,0],
       x: e.pageX,
       y: e.pageY,
-      title: "",
+      title: "Enter Title",
       description: "",
       created: e.timeStamp,
       quadrant: findQuad(name),
@@ -164,8 +154,6 @@ const Functions = () => {
     };
 
     setTasks([...td3tasks, newTask]);
-
-    // console.log("create Task was run", newTask);
   };
 
 
@@ -231,8 +219,6 @@ const Functions = () => {
     goHideShow: goHideShow,
     createTask: createTask,
     editTask: editTask,
-    isEmpty,
-    isOne,
     setFillColor: setFillColor,
     rmTasks: rmTasks,
     delTasks: delTasks,
