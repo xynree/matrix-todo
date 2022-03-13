@@ -11,6 +11,10 @@ import {
 import "./Types.d.ts";
 
 const Functions = () => {
+  const _isEmpty = (val) => (val === '')
+
+  const _isOne = val => (val.length === 1)
+
   const rotateOnOff = (setRotate, rotate) => {
     setRotate(!rotate);
   };
@@ -66,8 +70,6 @@ const Functions = () => {
     }
   };
   const resetStorage = (setTasks: setTasks, td3id: td3id) => {
-    // console.log("storage reset");
-
     td3id.current = 0;
     setTasks([]);
 
@@ -94,16 +96,28 @@ const Functions = () => {
     hasClicked: any,
     td3tasks
   ) => {
-    console.log(td3tasks);
-    let newTasks = td3tasks.map((task) => {
-      if (task.id === adjusted.id) {
-        task.title = adjusted.title;
-        task.editing = false;
-      }
-      return task;
-    });
-    setTasks(newTasks);
-    hasClicked.current = false;
+    console.log('updated task value:', td3tasks, _isOne(adjusted.title))
+
+    if (_isOne(adjusted.title)) {
+     let newTasks = td3tasks.map((task) => {
+       task.editing = false;
+       return task
+     })
+
+     setTasks(newTasks)
+     hasClicked.current = false;
+
+    } else {
+      let newTasks = td3tasks.map((task) => {
+        if (task.id === adjusted.id) {
+          task.title = adjusted.title;
+          task.editing = false;
+        }
+        return task;
+      });
+      setTasks(newTasks);
+      hasClicked.current = false;
+    } 
   };
 
   const findQuad = (name) => {
@@ -140,6 +154,7 @@ const Functions = () => {
     let newTask = {
       id: td3id.current,
       screenSize: [screenSize.width, screenSize.height],
+      shift: [0,0],
       x: e.pageX,
       y: e.pageY,
       title: "",
@@ -155,6 +170,8 @@ const Functions = () => {
   };
 
   const updateTask = (e, adjusted: task, setAdjusted: any) => {
+    if (_isEmpty(e.target.value)) return;
+    if (_isOne(e.target.value)) return;
     adjusted.title = e.target.value;
     setAdjusted(adjusted);
   };

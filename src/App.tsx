@@ -25,7 +25,6 @@ const App = () => {
   ];
 
   useEffect(() => {
-    console.log(td3tasks);
 
     if (td3tasks) {
       rmTasks(td3tasks, setTasks);

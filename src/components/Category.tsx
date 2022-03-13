@@ -15,13 +15,14 @@ const Category = ({
   const createTask = Functions().createTask;
 
   const onDrop = (item, monitor) => {
+    console.log(monitor, item)
     let coordinates = {
       x:
         monitor.getInitialClientOffset().x +
-        monitor.getDifferenceFromInitialOffset().x,
+        monitor.getDifferenceFromInitialOffset().x ,
       y:
         monitor.getInitialClientOffset().y +
-        monitor.getDifferenceFromInitialOffset().y,
+        monitor.getDifferenceFromInitialOffset().y ,
     };
 
     let td3tasks = JSON.parse(window.localStorage.getItem("td3tasks"));

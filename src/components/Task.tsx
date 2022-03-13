@@ -25,7 +25,7 @@ const Task: React.FC<TaskProps> = ({
 
   const fill = setFillColor(task.quadrant);
 
-  const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
+  const [{ isDragging}, drag, dragPreview] = useDrag(() => ({
     type: "task",
     item: {
       id: task.id,
@@ -35,6 +35,7 @@ const Task: React.FC<TaskProps> = ({
       isDragging: !!monitor.isDragging(),
     }),
   }));
+
 
   const adjustEdit = (task, setTasks, td3tasks) => {
     let newTasks = td3tasks.map((item) => {
@@ -58,7 +59,7 @@ const Task: React.FC<TaskProps> = ({
           >
             <input
               type="text"
-              placeholder={task.title || "Title"}
+              placeholder={ adjusted.title? adjusted.title: "Title" }
               onChange={(e) => updateTask(e, adjusted, setAdjusted)}
               className="p-2 bg-gray-50 focus:outline-white  border z-50 text-blue-800 border-blue-800  bg-transparent mb-1"
             />
@@ -69,7 +70,7 @@ const Task: React.FC<TaskProps> = ({
                 editTask(adjusted, setTasks, hasClicked, td3tasks)
               }
               className="border bg-white p-1 pl-2 pr-2 text-xs z-50 border-blue-500 mt-2"
-              text={task.title ? "edit" : "new"}
+              text={task.title ? "update" : "new"}
               style={{ fontSize: "10.5px" }}
             />
 
