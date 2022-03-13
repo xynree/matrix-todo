@@ -11,9 +11,9 @@ import {
 import "./Types.d.ts";
 
 const Functions = () => {
-  const _isEmpty = (val) => (val === '')
+  const isEmpty = (val) => (val === '')
 
-  const _isOne = val => (val.length === 1)
+  const isOne = val => (val.length === 1)
 
   const rotateOnOff = (setRotate, rotate) => {
     setRotate(!rotate);
@@ -96,9 +96,8 @@ const Functions = () => {
     hasClicked: any,
     td3tasks
   ) => {
-    console.log('updated task value:', td3tasks, _isOne(adjusted.title))
 
-    if (_isOne(adjusted.title)) {
+    if (isOne(adjusted.title)) {
      let newTasks = td3tasks.map((task) => {
        task.editing = false;
        return task
@@ -169,12 +168,6 @@ const Functions = () => {
     // console.log("create Task was run", newTask);
   };
 
-  const updateTask = (e, adjusted: task, setAdjusted: any) => {
-    if (_isEmpty(e.target.value)) return;
-    if (_isOne(e.target.value)) return;
-    adjusted.title = e.target.value;
-    setAdjusted(adjusted);
-  };
 
   const setFillColor = (quadrant: number) => {
     let fillColor;
@@ -238,7 +231,8 @@ const Functions = () => {
     goHideShow: goHideShow,
     createTask: createTask,
     editTask: editTask,
-    updateTask: updateTask,
+    isEmpty,
+    isOne,
     setFillColor: setFillColor,
     rmTasks: rmTasks,
     delTasks: delTasks,

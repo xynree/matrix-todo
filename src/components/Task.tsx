@@ -20,9 +20,17 @@ const Task: React.FC<TaskProps> = ({
   hideShow,
   hasClicked,
 }) => {
-  const { editTask, setFillColor, updateTask, delTasks } = Functions();
+  const { editTask, setFillColor,isEmpty, isOne, delTasks } = Functions();
   const [adjusted, setAdjusted] = useState(task);
 
+  const updateTask = (e) => {
+    if (isEmpty(e.target.value)) return;
+    if (isOne(e.target.value)) return;
+    adjusted.title = e.target.value;
+    setAdjusted({...adjusted});
+  };
+
+  console.log('task refreshed')
   const fill = setFillColor(task.quadrant);
 
   const [{ isDragging}, drag, dragPreview] = useDrag(() => ({
@@ -59,9 +67,8 @@ const Task: React.FC<TaskProps> = ({
           >
             <input
               type="text"
-              placeholder={ adjusted.title? adjusted.title: "Title" }
-              onChange={(e) => updateTask(e, adjusted, setAdjusted)}
-              className="p-2 bg-gray-50 focus:outline-white  border z-50 text-blue-800 border-blue-800  bg-transparent mb-1"
+              onChange={updateTask}
+              className="p-2 bg-gray-50 focus:outline-white  border z-50 text-blue-800 border-blue-800 bg-transparent mb-1"
             />
 
             <Button
